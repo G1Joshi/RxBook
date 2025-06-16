@@ -90,3 +90,13 @@ block("dispose") {
 
     subscription.dispose()
 }
+
+block("disposeBag") {
+    let disposeBag = DisposeBag()
+
+    Observable.of("A", "B", "C")
+        .subscribe {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+}
