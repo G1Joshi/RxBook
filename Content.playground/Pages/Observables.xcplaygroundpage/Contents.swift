@@ -68,3 +68,15 @@ block("never") {
         }
     )
 }
+
+block("range") {
+    let observable: Observable<Int> = Observable.range(start: 1, count: 10)
+
+    observable.subscribe(onNext: { element in
+        let number = Double(element)
+        let fibonacci = Int(
+            ((pow(1.61803, number) - pow(0.61803, number)) / 2.23606).rounded()
+        )
+        print(fibonacci)
+    })
+}
