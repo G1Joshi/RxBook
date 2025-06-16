@@ -55,3 +55,16 @@ block("empty") {
         }
     )
 }
+
+block("never") {
+    let observable: Observable<Any> = Observable.never()
+
+    observable.subscribe(
+        onNext: { element in
+            print(element)
+        },
+        onCompleted: {
+            print("Completed")
+        }
+    )
+}
