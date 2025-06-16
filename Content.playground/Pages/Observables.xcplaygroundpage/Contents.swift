@@ -42,3 +42,16 @@ block("subscribe") {
         }
     )
 }
+
+block("empty") {
+    let observable: Observable<Void> = Observable.empty()
+
+    observable.subscribe(
+        onNext: { element in
+            print(element)
+        },
+        onCompleted: {
+            print("Completed")
+        }
+    )
+}
