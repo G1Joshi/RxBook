@@ -80,3 +80,13 @@ block("range") {
         print(fibonacci)
     })
 }
+
+block("dispose") {
+    let observable = Observable.of("A", "B", "C")
+
+    let subscription = observable.subscribe { event in
+        print(event)
+    }
+
+    subscription.dispose()
+}
