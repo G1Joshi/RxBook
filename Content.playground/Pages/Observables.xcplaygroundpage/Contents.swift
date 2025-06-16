@@ -170,3 +170,34 @@ block("deferred") {
         print()
     }
 }
+
+block("single") {
+    let disposeBag = DisposeBag()
+
+    enum MyError: Error {
+        case Error
+    }
+
+    func loadText() -> Single<String> {
+        return Single.create { single in
+            let success = Bool.random()
+            if success {
+                single(.success("Hello, world!"))
+            } else {
+                single(.failure(MyError.Error))
+            }
+            return Disposables.create()
+        }
+    }
+
+    loadText()
+        .subscribe { result in
+            switch result {
+            case .success(let value):
+                print(value)
+            case .failure(let error):
+                print(error)
+            }
+        }
+        .disposed(by: disposeBag)
+}
