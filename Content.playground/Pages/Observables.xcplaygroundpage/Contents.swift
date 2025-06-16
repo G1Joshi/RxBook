@@ -123,3 +123,30 @@ block("create") {
     }
     .disposed(by: disposeBag)
 }
+
+block("error") {
+    enum MyError: Error {
+        case Error
+    }
+
+    let disposeBag = DisposeBag()
+
+    Observable<String>.create { observer in
+        observer.onNext("A")
+        observer.onNext("B")
+        observer.onNext("C")
+        observer.onError(MyError.Error)
+        observer.onNext("D")
+        return Disposables.create()
+    }
+    .subscribe {
+        print($0)
+    } onError: {
+        print($0)
+    } onCompleted: {
+        print("Completed")
+    } onDisposed: {
+        print("Disposed")
+    }
+    .disposed(by: disposeBag)
+}
