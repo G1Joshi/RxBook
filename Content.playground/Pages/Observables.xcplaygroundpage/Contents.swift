@@ -15,3 +15,30 @@ block("observable") {
     let observable4: Observable<[Int]> = Observable.of([one, two, three])
     let observable5: Observable<Int> = Observable.from([one, two, three])
 }
+
+block("subscribe") {
+    let one = 1
+    let two = 2
+    let three = 3
+
+    let observable = Observable.of(one, two, three)
+
+    observable.subscribe { event in
+        print(event)
+    }
+
+    observable.subscribe { event in
+        if let elememt = event.element {
+            print(elememt)
+        }
+    }
+
+    observable.subscribe(
+        onNext: { element in
+            print(element)
+        },
+        onCompleted: {
+            print("Completed")
+        }
+    )
+}
