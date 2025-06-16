@@ -150,3 +150,23 @@ block("error") {
     }
     .disposed(by: disposeBag)
 }
+
+block("deferred") {
+    let disposeBag = DisposeBag()
+
+    let factory: Observable<Int> = Observable.deferred {
+        return if Bool.random() {
+            Observable.of(1, 2, 3)
+        } else {
+            Observable.of(4, 5, 6)
+        }
+    }
+
+    for _ in 0...3 {
+        factory.subscribe(onNext: {
+            print($0, terminator: "")
+        })
+        .disposed(by: disposeBag)
+        print()
+    }
+}
