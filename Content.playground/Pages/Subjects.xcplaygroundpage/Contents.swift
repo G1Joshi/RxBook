@@ -98,3 +98,17 @@ block("replaySubject") {
 
     subject.dispose()
 }
+
+block("publishRelay") {
+    let relay: PublishRelay<String> = PublishRelay()
+    let disposeBag = DisposeBag()
+
+    relay.accept("A")
+
+    relay.subscribe {
+        print("1", $0)
+    }
+    .disposed(by: disposeBag)
+
+    relay.accept("B")
+}
