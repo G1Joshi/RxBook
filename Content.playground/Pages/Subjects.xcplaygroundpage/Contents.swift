@@ -73,3 +73,28 @@ block("behaviorSubject") {
 
     subscription3.dispose()
 }
+
+block("replaySubject") {
+    let subject: ReplaySubject<String> = ReplaySubject.create(bufferSize: 2)
+    let disposeBag = DisposeBag()
+
+    subject.onNext("A")
+    subject.onNext("B")
+    subject.onNext("C")
+
+    subject.subscribe {
+        print("1", $0)
+    }
+    .disposed(by: disposeBag)
+
+    subject.onNext("D")
+
+    subject.subscribe {
+        print("2", $0)
+    }
+    .disposed(by: disposeBag)
+
+    subject.onError(MyError.Error)
+
+    subject.dispose()
+}
