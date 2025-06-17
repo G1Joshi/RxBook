@@ -112,3 +112,26 @@ block("publishRelay") {
 
     relay.accept("B")
 }
+
+block("behaviorRelay") {
+    let relay: BehaviorRelay<String> = BehaviorRelay(value: "A")
+    let disposeBag = DisposeBag()
+
+    relay.accept("B")
+
+    relay.subscribe {
+        print("1", $0)
+    }
+    .disposed(by: disposeBag)
+
+    relay.accept("C")
+
+    relay.subscribe {
+        print("2", $0)
+    }
+    .disposed(by: disposeBag)
+
+    relay.accept("D")
+
+    print(relay.value)
+}
