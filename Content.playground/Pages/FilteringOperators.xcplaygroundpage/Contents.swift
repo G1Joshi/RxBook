@@ -88,3 +88,14 @@ block("skipUntil") {
     trigger.onNext("B")
     subject.onNext("C")
 }
+
+block("take") {
+    let disposeBag = DisposeBag()
+
+    Observable.of(1, 2, 3, 4, 5, 6)
+        .take(3)
+        .subscribe {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+}
