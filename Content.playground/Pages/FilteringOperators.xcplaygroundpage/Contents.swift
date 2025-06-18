@@ -110,3 +110,21 @@ block("takeWhile") {
         }
         .disposed(by: disposeBag)
 }
+
+block("takeUntil") {
+    let disposeBag = DisposeBag()
+
+    let subject = PublishSubject<String>()
+    let trigger = PublishSubject<String>()
+
+    subject
+        .take(until: trigger)
+        .subscribe {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+
+    subject.onNext("A")
+    trigger.onNext("B")
+    subject.onNext("C")
+}
