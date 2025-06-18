@@ -99,3 +99,14 @@ block("take") {
         }
         .disposed(by: disposeBag)
 }
+
+block("takeWhile") {
+    let disposeBag = DisposeBag()
+
+    Observable.of(0, 2, 4, 5, 6, 7)
+        .take(while: { $0 % 2 == 0 })
+        .subscribe {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+}
