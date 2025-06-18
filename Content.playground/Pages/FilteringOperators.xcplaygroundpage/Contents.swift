@@ -48,3 +48,14 @@ block("filter") {
         }
         .disposed(by: disposeBag)
 }
+
+block("skip") {
+    let disposeBag = DisposeBag()
+
+    Observable.of(1, 2, 3, 4, 5, 6)
+        .skip(3)
+        .subscribe {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+}
