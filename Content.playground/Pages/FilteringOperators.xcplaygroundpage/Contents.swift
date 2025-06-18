@@ -37,3 +37,14 @@ block("elementAt") {
     strikes.onNext("C")
     strikes.onCompleted()
 }
+
+block("filter") {
+    let disposeBag = DisposeBag()
+
+    Observable.of(1, 2, 3, 4, 5, 6)
+        .filter { $0 % 2 == 0 }
+        .subscribe {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+}
