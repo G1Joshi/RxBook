@@ -20,3 +20,20 @@ block("ignoreElements") {
     strikes.onNext("C")
     strikes.onCompleted()
 }
+
+block("elementAt") {
+    let strikes: PublishSubject<String> = PublishSubject()
+    let disposeBag = DisposeBag()
+
+    strikes
+        .element(at: 2)
+        .subscribe {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+
+    strikes.onNext("A")
+    strikes.onNext("B")
+    strikes.onNext("C")
+    strikes.onCompleted()
+}
