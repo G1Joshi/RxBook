@@ -128,3 +128,14 @@ block("takeUntil") {
     trigger.onNext("B")
     subject.onNext("C")
 }
+
+block("distinctUntilChanged") {
+    let disposeBag = DisposeBag()
+
+    Observable.of(1, 2, 2, 3, 3, 3, 2, 2, 1)
+        .distinctUntilChanged()
+        .subscribe {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+}
