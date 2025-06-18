@@ -70,3 +70,21 @@ block("skipWhile") {
         }
         .disposed(by: disposeBag)
 }
+
+block("skipUntil") {
+    let disposeBag = DisposeBag()
+
+    let subject = PublishSubject<String>()
+    let trigger = PublishSubject<String>()
+
+    subject
+        .skip(until: trigger)
+        .subscribe {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+
+    subject.onNext("A")
+    trigger.onNext("B")
+    subject.onNext("C")
+}
