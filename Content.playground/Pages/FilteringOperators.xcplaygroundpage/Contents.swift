@@ -139,3 +139,21 @@ block("distinctUntilChanged") {
         }
         .disposed(by: disposeBag)
 }
+
+block("distinctUntilChanged()") {
+    let disposeBag = DisposeBag()
+
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .spellOut
+
+    Observable.of(2, 3, 6, 8, 9, 12, 14)
+        .distinctUntilChanged { a, b in
+            let one = a % 2 == 0
+            let two = b % 3 == 0
+            return one && two
+        }
+        .subscribe {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+}
