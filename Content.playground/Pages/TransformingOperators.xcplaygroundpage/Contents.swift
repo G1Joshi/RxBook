@@ -25,3 +25,17 @@ block("map") {
         }
         .disposed(by: disposeBag)
 }
+
+block("enumerated") {
+    let disposeBag = DisposeBag()
+
+    Observable.of(0, 1, 2, 3, 4)
+        .enumerated()
+        .map {
+            $0 % 2 == 0 ? $1 * 2 : $1 * 3
+        }
+        .subscribe {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+}
