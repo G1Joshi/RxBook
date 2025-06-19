@@ -67,3 +67,31 @@ block("flatMap") {
     a.score.onNext(95)
     b.score.onNext(100)
 }
+
+block("flatMapLatest") {
+    struct Score {
+        let score: BehaviorSubject<Int>
+    }
+
+    let disposeBag = DisposeBag()
+
+    let a = Score(score: BehaviorSubject(value: 80))
+    let b = Score(score: BehaviorSubject(value: 90))
+
+    let c = PublishSubject<Score>()
+
+    c.flatMapLatest {
+        $0.score
+    }
+    .subscribe {
+        print($0)
+    }
+    .disposed(by: disposeBag)
+
+    c.onNext(a)
+    a.score.onNext(85)
+
+    c.onNext(b)
+    a.score.onNext(95)
+    b.score.onNext(100)
+}
