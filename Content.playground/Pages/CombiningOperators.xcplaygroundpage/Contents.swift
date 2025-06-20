@@ -41,3 +41,32 @@ block("concatMap") {
         }
         .disposed(by: disposeBag)
 }
+
+block("merge") {
+    let first = PublishSubject<String>()
+    let second = PublishSubject<String>()
+
+    Observable.of(first, second)
+        .merge()
+        .subscribe {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+
+    var firstValues = ["A", "B", "C"]
+    var secondValues = ["D", "E", "F"]
+
+    repeat {
+        switch Bool.random() {
+        case true where !firstValues.isEmpty:
+            first.onNext("1: " + firstValues.removeFirst())
+        case false where !secondValues.isEmpty:
+            second.onNext("2: " + secondValues.removeFirst())
+        default:
+            break
+        }
+    } while !firstValues.isEmpty || !secondValues.isEmpty
+
+    first.onCompleted()
+    second.onCompleted()
+}
