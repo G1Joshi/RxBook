@@ -123,3 +123,22 @@ block("withLatestFrom") {
     button.onNext(())
     button.onNext(())
 }
+
+block("amb") {
+    let first = PublishSubject<String>()
+    let second = PublishSubject<String>()
+
+    first.amb(second)
+        .subscribe {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+
+    first.onNext("A")
+    second.onNext("B")
+    first.onNext("C")
+    second.onNext("D")
+
+    first.onCompleted()
+    second.onCompleted()
+}
