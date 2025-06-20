@@ -142,3 +142,31 @@ block("amb") {
     first.onCompleted()
     second.onCompleted()
 }
+
+block("switchLatest") {
+    let one = PublishSubject<String>()
+    let two = PublishSubject<String>()
+    let three = PublishSubject<String>()
+
+    let source = PublishSubject<Observable<String>>()
+
+    source.switchLatest()
+        .subscribe {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+
+    source.onNext(one)
+    one.onNext("A")
+    two.onNext("B")
+    source.onNext(two)
+    two.onNext("C")
+    one.onNext("D")
+    source.onNext(three)
+    three.onNext("E")
+    two.onNext("F")
+    one.onNext("G")
+    source.onNext(one)
+    one.onNext("H")
+    two.onNext("I")
+}
