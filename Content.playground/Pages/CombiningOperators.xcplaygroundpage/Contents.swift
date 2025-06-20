@@ -70,3 +70,24 @@ block("merge") {
     first.onCompleted()
     second.onCompleted()
 }
+
+block("combineLatest") {
+    let first = PublishSubject<String>()
+    let second = PublishSubject<String>()
+
+    Observable.combineLatest(first, second) {
+        "\($0) \($1)"
+    }
+    .subscribe {
+        print($0)
+    }
+    .disposed(by: disposeBag)
+
+    first.onNext("AA")
+    second.onNext("BA")
+    second.onNext("BB")
+    first.onNext("AB")
+
+    first.onCompleted()
+    second.onCompleted()
+}
