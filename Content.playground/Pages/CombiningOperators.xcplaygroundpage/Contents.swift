@@ -170,3 +170,14 @@ block("switchLatest") {
     one.onNext("H")
     two.onNext("I")
 }
+
+block("reduce") {
+    Observable.of(1, 3, 5, 7, 9)
+        .reduce(0) {
+            $0 + $1
+        }
+        .subscribe {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+}
