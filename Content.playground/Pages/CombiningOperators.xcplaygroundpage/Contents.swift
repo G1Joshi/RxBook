@@ -104,3 +104,22 @@ block("zip") {
     }
     .disposed(by: disposeBag)
 }
+
+block("withLatestFrom") {
+    let button = PublishSubject<Void>()
+    let textField = PublishSubject<String>()
+
+    button.withLatestFrom(textField)
+        .subscribe {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+
+    textField.onNext("A")
+    textField.onNext("AB")
+    textField.onNext("ABC")
+
+    button.onNext(())
+    button.onNext(())
+    button.onNext(())
+}
