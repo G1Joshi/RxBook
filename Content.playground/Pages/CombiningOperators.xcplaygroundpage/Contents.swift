@@ -91,3 +91,16 @@ block("combineLatest") {
     first.onCompleted()
     second.onCompleted()
 }
+
+block("zip") {
+    let first = Observable.of(1, 2, 3, 4, 5)
+    let second = Observable.of("A", "B", "C", "D", "E")
+
+    Observable.zip(first, second) {
+        "\($0) : \($1)"
+    }
+    .subscribe {
+        print($0)
+    }
+    .disposed(by: disposeBag)
+}
