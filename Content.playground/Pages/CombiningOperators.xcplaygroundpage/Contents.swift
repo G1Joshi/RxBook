@@ -11,3 +11,19 @@ block("startWith") {
         }
         .disposed(by: disposeBag)
 }
+
+block("concat") {
+    let first = Observable.of(1, 2, 3)
+    let second = Observable.of(4, 5, 6)
+
+    Observable.concat(first, second)
+        .subscribe {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+
+    first.concat(second).subscribe {
+        print($0)
+    }
+    .disposed(by: disposeBag)
+}
